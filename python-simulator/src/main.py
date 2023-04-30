@@ -1,76 +1,36 @@
-# Install below packages
-'''
-sudo pip3 install azure-iot-device
-sudo pip3 install azure-iot-hub
-sudo pip3 install iothub-service-client
-sudo pip3 install iothub-device-client
-'''
+# configuration
 
-# Run below on Azure CLI
-'''
-#### below to add extension
-az extension add --name azure-cli-iot-ext
-
-### Below to start device monitor to check incoming telemetry data
-az iot hub monitor-events --hub-name YourIoTHubName --device-id MyPythonDevice
-
-'''
+from azure_config import *
+from device_conf import *
+from azure_edge_device import edge_device_client
+from device_simulator  import device_simulator
 
 # Copyright (c) Microsoft. All rights reserved.
 # Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import random
 import time
 
-# Using the Python Device SDK for IoT Hub:
-#   https://github.com/Azure/azure-iot-sdk-python
-# The sample connects to a device-specific MQTT endpoint on your IoT Hub.
-from azure.iot.device import IoTHubDeviceClient, Message
-
-# The device connection string to authenticate the device with your IoT hub.
-# Using the Azure CLI:
-# az iot hub device-identity show-connection-string --hub-name {YourIoTHubName} --device-id MyNodeDevice --output table
-CONNECTION_STRING = "HostName=myIoTHubTutorialLucia.azure-devices.net;DeviceId=edgeDrone1;SharedAccessKey=g4tN5Hx96OVJt0A1y0H6inFz6nkS9p2cy+m2i248Gc8="
-
-# Define the JSON message to send to IoT Hub.
-TEMPERATURE = 20.0
-HUMIDITY = 60
-MSG_TXT = '{{"temperature": {temperature},"humidity": {humidity}}}'
-
-def iothub_client_init():
-    # Create an IoT Hub client
-    client = IoTHubDeviceClient.create_from_connection_string(CONNECTION_STRING)
-    return client
-
-def iothub_client_telemetry_sample_run():
+if __name__ == '__main__':
+    print ( "IoT Hub - Simulated device" )
+    print ( "Press Ctrl-C to exit" )
 
     try:
-        client = iothub_client_init()
+        
+        # connect to the azure device 
         print ( "IoT Hub device sending periodic messages, press Ctrl-C to exit" )
+        client = edge_device_client("drone_1", IOT_EDGE_CONNECTION_STRING)
+        client.connect()
+
+        # creation of simulated devices
+        for id in range(DEVICE_NUMBER):
+            client.include_device(device_simulator(id))
+          
         while True:
-            # Build the message with simulated telemetry values.
-            temperature = TEMPERATURE + (random.random() * 15)
-            humidity = HUMIDITY + (random.random() * 20)
-            msg_txt_formatted = MSG_TXT.format(temperature=temperature, humidity=humidity)
-            message = Message(msg_txt_formatted)
+            # Send the message
 
-            # Add a custom application property to the message.
-            # An IoT hub can filter on these properties without access to the message body.
-            if temperature > 30:
-              message.custom_properties["temperatureAlert"] = "true"
-            else:
-              message.custom_properties["temperatureAlert"] = "false"
-
-            # Send the message.
-            print( "Sending message: {}".format(message) )
-            client.send_message(message)
-            print ( "Message successfully sent" )
+            client.send_complete_status()
+            
             time.sleep(3)
 
     except KeyboardInterrupt:
         print ( "IoTHubClient sample stopped" )
-
-if __name__ == '__main__':
-    print ( "IoT Hub Quickstart #1 - Simulated device" )
-    print ( "Press Ctrl-C to exit" )
-    iothub_client_telemetry_sample_run()
