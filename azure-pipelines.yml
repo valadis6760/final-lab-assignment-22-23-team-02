@@ -8,10 +8,9 @@ resources:
 - repo: self
 
 steps:
-
-# - script:
-#     bash ./config-env.sh
-#   displayName: 'Install linux dependencies'
+- script:
+    echo hello
+  displayName: 'Install linux dependencies'
 
 # - task: Docker@2
 #   inputs:
