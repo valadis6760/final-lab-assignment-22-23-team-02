@@ -11,8 +11,8 @@ else
     mkdir ${DRONE_APP_PATH}
 fi
 
-cd ${DRONE_APP_PATH}
-git clone https://github.com/ETSISI-CCforIoT/final-lab-assignment-22-23-team-02.git
-cd final-lab-assignment-22-23-team-02
+# cd ${DRONE_APP_PATH}
+# git clone https://github.com/ETSISI-CCforIoT/final-lab-assignment-22-23-team-02.git
+# cd final-lab-assignment-22-23-team-02
 
 sudo cp -r . ${DRONE_APP_PATH}
