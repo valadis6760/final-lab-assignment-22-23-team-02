@@ -2,7 +2,9 @@
 
 export DRONE_APP_PATH=/home/drone-app
 
-sudo apt -y install python3 python3-pip
+sudo apt-get update
+sudo apt-get -y install python3
+sudo apt-get -y install python3-pip
 pip3 install -r requirements.txt
 
 if [ -d ${DRONE_APP_PATH} ]; then
@@ -10,9 +12,5 @@ if [ -d ${DRONE_APP_PATH} ]; then
 else
     mkdir ${DRONE_APP_PATH}
 fi
-
-# cd ${DRONE_APP_PATH}
-# git clone https://github.com/ETSISI-CCforIoT/final-lab-assignment-22-23-team-02.git
-# cd final-lab-assignment-22-23-team-02
 
 sudo cp -r . ${DRONE_APP_PATH}
