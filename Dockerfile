@@ -10,8 +10,8 @@ ADD . /home/drone-app
 
 # Install any needed packages specified in requirements.txt
 # RUN pip install --trusted-host pypi.python.org -r requirements.txt
-RUN sudo apt-get -y install python3
-RUN sudo apt-get -y install python3-pip
+RUN apt-get update
+RUN apt-get install -y python3
 RUN pip3 install -r requirements.txt
 
 # # Make port 80 available to the world outside this container
