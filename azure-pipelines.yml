@@ -1,9 +1,9 @@
 trigger:
  - main
 
-pool:
-#    # vmImage: 'ubuntu-latest'
-  name: 'Drone'
+# pool:
+# #    # vmImage: 'ubuntu-latest'
+#   name: 'Drone'
 
 steps:
 
