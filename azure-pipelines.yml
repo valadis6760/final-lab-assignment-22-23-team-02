@@ -7,5 +7,5 @@ pool:
 steps:
 
 - script:
-    sudo ./config-env.sh
+    sudo bash ./config-env.sh
   displayName: 'Install linux dependencies'
