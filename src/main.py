@@ -18,7 +18,7 @@ if __name__ == '__main__':
         
         # connect to the azure device 
         print ( "IoT Hub device sending periodic messages, press Ctrl-C to exit" )
-        client = edge_device_client("drone_1", IOT_EDGE_CONNECTION_STRING)
+        client = edge_device_client(1, IOT_EDGE_CONNECTION_STRING)
         client.connect()
 
         # creation of simulated devices

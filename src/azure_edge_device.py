@@ -27,7 +27,7 @@ class edge_device_client:
 
     def send_complete_status(self):
 
-        message = '{' + get_status_from_edge(self.name) + ',devices:['
+        message = '{' + get_status_from_edge(self.name) + ',"devices":['
         i = 0
         len_dev = len(self.devices)
 
