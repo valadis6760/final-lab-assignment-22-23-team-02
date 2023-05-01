@@ -6,4 +6,4 @@
 IOT_EDGE_CONNECTION_STRING = "HostName=iot-hub-test-jmad.azure-devices.net;DeviceId=edgeDrone1;SharedAccessKey=9/BbwxMEgBySDiikroFeKtHwHrgVZ6eQ9J8o12mAzjo="
 
 EDGE_DEVICE_ID      = 0
-DEALY_SENT_SECONDS  = 10
+DEALY_SENT_SECONDS  = 5
