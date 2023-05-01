@@ -8,5 +8,5 @@ pool:
 steps:
 
 - script:
-    sudo bash ./config-env.sh
+    bash ./config-env.sh
   displayName: 'Install linux dependencies'
