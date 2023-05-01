@@ -4,6 +4,8 @@ trigger:
 # pool:
 # #    # vmImage: 'ubuntu-latest'
 #   name: 'Drone'
+resources:
+- repo: self
 
 steps:
 
