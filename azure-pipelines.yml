@@ -5,14 +5,14 @@ resources:
 - repo: self
 
 steps:
-- script:
-    echo hello
-  displayName: 'Install linux dependencies'
+# - script:
+#     echo hello
+#   displayName: 'Install linux dependencies'
 
-# - task: Docker@2
-#   inputs:
-#     containerRegistry: 'connect to docker'
-#     repository: 'jmadupm/drone-repo'
-#     command: buildAndPush
-#     Dockerfile: '**/Dockerfile'
-#     tags: 'latest'
+- task: Docker@2
+  inputs:
+    containerRegistry: 'connect to docker'
+    repository: 'jmadupm/drone-repo'
+    command: buildAndPush
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
