@@ -2,8 +2,8 @@ trigger:
  - main
 
 pool:
-  #  vmImage: 'ubuntu-latest'
-  name: 'drone'
+   vmImage: 'ubuntu-latest'
+  # name: 'drone'
 
 steps:
 # - task: UsePythonVersion@0
