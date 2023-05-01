@@ -1,12 +1,19 @@
 trigger:
  - main
 
-pool:
-#    # vmImage: 'ubuntu-latest'
-  name: 'Drone'
+# pool:
+# #    # vmImage: 'ubuntu-latest'
+#   name: 'Drone'
 
 steps:
 
-- script:
-    bash ./config-env.sh
-  displayName: 'Install linux dependencies'
+# - script:
+#     bash ./config-env.sh
+#   displayName: 'Install linux dependencies'
+- task: Docker@2
+  inputs:
+    containerRegistry: 'connect to docker'
+    repository: 'jmadupm/drone-repo'
+    command: buildAndPush
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
