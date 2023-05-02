@@ -2,7 +2,7 @@
 #   https://github.com/Azure/azure-iot-sdk-python
 # The sample connects to a device-specific MQTT endpoint on your IoT Hub.
 from azure.iot.device import IoTHubDeviceClient
-from connection_functions   import get_status_from_edge
+from connection_functions   import get_status_from_edge, get_timestamp
 
 # The device connection string to authenticate the device with your IoT hub.
 # Using the Azure CLI:
@@ -27,7 +27,7 @@ class edge_device_client:
 
     def send_complete_status(self):
 
-        message = '{' + get_status_from_edge(self.name) + ',"devices":['
+        message = '{"ts":'+ str(get_timestamp()) + ',' + get_status_from_edge(self.name) + ',"devices":['
         i = 0
         len_dev = len(self.devices)
 
