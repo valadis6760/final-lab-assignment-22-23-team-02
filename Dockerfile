@@ -23,4 +23,4 @@ ENV NAME jmad
 ENV DRONE_APP_PATH /home/drone-app
 
 # Run app.py when the container launches
-CMD ["python3", "/home/drone-app/src/main.py"]
+CMD ["python3", "/home/drone-app/src/main.py","-c"]
