@@ -14,17 +14,17 @@ def get_timestamp():
 
 def get_status_from_device(dev_id):
     
-    batt        = round(BATTERY_PERC    + (random.random() * 15), ROUND_DECIMALS)
-    temperature = round(TEMPERATURE_C   + (random.random() * 15), ROUND_DECIMALS)
+    batt        = round(MIN_BATTERY_PERC    + (random.random() * (MAX_BATTERY_PERC  - MIN_BATTERY_PERC))    , ROUND_DECIMALS)
+    temperature = round(MIN_TEMPERATURE_C   + (random.random() * (MAX_TEMPERATURE_C - MIN_TEMPERATURE_C))   , ROUND_DECIMALS)
     message     =  '{"id":' + str(dev_id) + ',"battery":' + str(batt) + ',"temperature":' + str(temperature) + '}'
     return      message
 
 def get_status_from_edge(edge_id):
     
-    batt        = round(BATTERY_PERC    + (random.random() * 15), ROUND_DECIMALS)
-    temperature = round(TEMPERATURE_C   + (random.random() * 15), ROUND_DECIMALS)
-    humidity    = round(HUMIDITY_PERC   + (random.random() * 20), ROUND_DECIMALS)
-    pressure    = round(PRESSURE_KPa    + (random.random() * 50), ROUND_DECIMALS)
+    batt        = round(MIN_BATTERY_PERC    + (random.random() * (MAX_BATTERY_PERC  - MIN_BATTERY_PERC)),   ROUND_DECIMALS)
+    temperature = round(MIN_TEMPERATURE_C   + (random.random() * (MAX_TEMPERATURE_C - MIN_TEMPERATURE_C)),  ROUND_DECIMALS)
+    humidity    = round(MIN_HUMIDITY_PERC   + (random.random() * (MAX_HUMIDITY_PERC - MIN_HUMIDITY_PERC)),  ROUND_DECIMALS)
+    pressure    = round(MIN_PRESSURE_KPa    + (random.random() * (MAX_PRESSURE_KPa  - MIN_PRESSURE_KPa)),   ROUND_DECIMALS)
     message     =  '"edge_device":{"id":' + str(edge_id) + ',"battery":' + str(batt) + ',"temperature":' + str(temperature) + ',"humidity":' + str(humidity) + ',"pressure":' + str(pressure) + '}'
 
     return      message

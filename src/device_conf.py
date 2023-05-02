@@ -1,10 +1,16 @@
 # number of devices to simulate
 DEVICE_NUMBER = 5
 
-# base values 
-TEMPERATURE_C   = 20.0
-HUMIDITY_PERC   = 60
-BATTERY_PERC    = 50 
-PRESSURE_KPa    = 101.325
+# min values 
+MIN_TEMPERATURE_C   = 20.0
+MIN_HUMIDITY_PERC   = 60
+MIN_BATTERY_PERC    = 50 
+MIN_PRESSURE_KPa    = 80
 
-ROUND_DECIMALS  = 1
+# max values 
+MAX_TEMPERATURE_C   = 30
+MAX_HUMIDITY_PERC   = 70
+MAX_BATTERY_PERC    = 90 
+MAX_PRESSURE_KPa    = 100
+
+ROUND_DECIMALS      = 1
