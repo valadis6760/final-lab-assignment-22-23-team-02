@@ -10,9 +10,9 @@ urlFragment: web-app-visualization
 description: "Livestock monitoring with drones involves the use of unmanned aerial vehicles to gather real-time data and insights on the health, behavior of livestock"
 ---
 
-# web-apps-node-iot-hub-data-visualization
+# live-stock-monitoring
 
-This repo contains code for a web application, which can read temperature and humidity data from IoT Hub and show the real-time data in a line chart on the web page.
+This repo contains code for a web application, which can read data from the edge  data from IoT Hub and show the real-time data  on the web page.
 
 ## Browser compatiblity
 
