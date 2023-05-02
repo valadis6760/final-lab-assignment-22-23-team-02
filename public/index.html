@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Livestock Monitoring</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="Livestock Monitoring - Monitoring Livestock using drones.">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/chart-device-data.js" type="text/javascript" charset="utf-8"></script>
+    
+<link href="css/style.css" rel="stylesheet"></head>
+<body>
+    
+        <div class="app-header header-shadow">
+            <div class="app-header__logo">
+                <div class="logo-src"></div>
+               
+            </div>
+           
+        </div>        
+            
+        
+        <div class="app-main">
+                
+                 <div class="app-main__outer">
+                    <div class="app-main__inner">
+                        <div class="app-page-title">
+                            <div class="page-title-wrapper">
+                                <div class="page-title-heading">
+                                    <div>Livestock Monitoring
+                                        <div class="page-title-subheading">Livestock monitoring with drones involves the use of unmanned aerial vehicles to gather real-time data and insights on the health, behavior, and location of livestock.
+                                        </div>
+                                    </div>
+                                </div>
+                                  
+                             </div>
+                        </div>            <div class="row">
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-midnight-bloom">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Temerature</div>
+                                            <div class="widget-subheading">Ambient temperature</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white"><span id="temp">0</span> °C</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-arielle-smile">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Humidity</div>
+                                            <div class="widget-subheading">Ambient humidity</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white"><span id="humd">0</span> %</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content bg-grow-early">
+                                    <div class="widget-content-wrapper text-white">
+                                        <div class="widget-content-left">
+                                            <div class="widget-heading">Pressure </div>
+                                            <div class="widget-subheading">Ambient pressure</div>
+                                        </div>
+                                        <div class="widget-content-right">
+                                            <div class="widget-numbers text-white"><span id="press">0</span> KPa</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-12 col-lg-6">
+                                <div class="mb-3 card">
+                                    <div class="card-header-tab card-header">
+                                        <div class="card-header-title">
+                                            <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure"> </i>
+                                            Weather status
+                                        </div>
+                
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" id="tab-eg-55">
+                                            <div class="widget-chart p-3">
+                                                <div style="height: 350px">
+                                                    <canvas id="weather-chart" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="widget-chart-content text-center mt-5">
+                                                    <div class="widget-description mt-0 text-warning">
+                                                       
+                                                        <span class="text-muted opacity-8 pl-1">timeseries of weather</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="pt-2 card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="widget-content">
+                                                            <div class="widget-content-outer">
+                                                                <div class="widget-content-wrapper">
+                                                                    <div class="widget-content-left">
+                                                                        <div class="widget-numbers fsize-3 text-muted" id="avg_hum">0</div>
+                                                                    </div>
+                                                                    <div class="widget-content-right">
+                                                                        <div class="text-muted opacity-6">Average Humidity (%)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-progress-wrapper mt-1">
+                                                                    <div class="progress-bar-sm progress-bar-animated-alt progress">
+                                                                        <div class="progress-bar bg-danger" id="avg_hum_pgs" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="widget-content">
+                                                            <div class="widget-content-outer">
+                                                                <div class="widget-content-wrapper">
+                                                                    <div class="widget-content-left">
+                                                                        <div class="widget-numbers fsize-3 text-muted" id="avg_press">0 </div>
+                                                                    </div>
+                                                                    <div class="widget-content-right">
+                                                                        <div class="text-muted opacity-6">Average pressure (KPa)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-progress-wrapper mt-1">
+                                                                    <div class="progress-bar-sm progress-bar-animated-alt progress">
+                                                                        <div class="progress-bar bg-success" id="avg_press_pgs" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-12">
+                                                        <div class="widget-content">
+                                                            <div class="widget-content-outer">
+                                                                <div class="widget-content-wrapper">
+                                                                    <div class="widget-content-left">
+                                                                        <div class="widget-numbers fsize-3 text-muted" id="avg_temp">0</div>
+                                                                    </div>
+                                                                    <div class="widget-content-right">
+                                                                        <div class="text-muted opacity-6">Average Temperature (°C)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-progress-wrapper mt-1">
+                                                                    <div class="progress-bar-sm progress-bar-animated-alt progress">
+                                                                        <div class="progress-bar bg-warning" id="avg_temp_pgs" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 col-lg-6">
+                                <div class="mb-3 card">
+                                    <div class="card-header-tab card-header">
+                                        <div class="card-header-title">
+                                            <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure"> </i>
+                                            Drone Battery
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade active show" id="tab-eg-55">
+                                            <div class="widget-chart p-3">
+                                                <div style="height: 350px">
+                                                    <canvas id="drone-battery-chart" style="width: 100%; height: 100%;"></canvas>
+                                                </div>
+                                                <div class="widget-chart-content text-center mt-5">
+                                                    <div class="widget-description mt-0 text-warning">
+                                                        
+                                                        <span class="text-muted opacity-8 pl-1">battery usage over time</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="pt-2 card-body">
+                                                <div class="row">
+                                             <div class="col-12">
+                                                        <div class="widget-content">
+                                                            <div class="widget-content-outer">
+                                                                <div class="widget-content-wrapper">
+                                                                    <div class="widget-content-left">
+                                                                        <div class="widget-numbers fsize-3 text-muted" id="drone_bat_percent">0</div>
+                                                                    </div>
+                                                                    <div class="widget-content-right">
+                                                                        <div class="text-muted opacity-6">Battery Percent (%)</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-progress-wrapper mt-1">
+                                                                    <div class="progress-bar-sm progress-bar-animated-alt progress">
+                                                                        <div class="progress-bar bg-primary" id="drone_bat_percent_pgs" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">Total </div>
+                                                <div class="widget-subheading">Livestock in Farm</div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-success" id="farm_total">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">Battery Level</div>
+                                                <div class="widget-subheading">Average of Collars</div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-warning"><span id="farm_batt">0</span>%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card mb-3 widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <div class="widget-content-left">
+                                                <div class="widget-heading">Health</div>
+                                                <div class="widget-subheading">Avergae Health</div>
+                                            </div>
+                                            <div class="widget-content-right">
+                                                <div class="widget-numbers text-danger"><span id="farm_health">0</span>%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+               
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="main-card mb-3 card">
+                                    <div class="card-header">Active Livestock
+                                       
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-center">Id</th>
+                                                <th>Time Stamp</th>
+                                                <th class="text-center">Temperature</th>
+                                                <th class="text-center">Battery</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="text-center text-muted" id="1_id">#1</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading" id="1_time">time</div>
+                                                                <div class="widget-subheading opacity-7" id="1_date">date</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><span id="1_temp">0</span> °C</td>
+                                                <td class="text-center"><span id="1_batt">0</span> %</td>
+                                                
+                                             
+                                            </tr>
+
+                                            <tr>
+                                                <td class="text-center text-muted" id="2_id">#2</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading" id="2_time">time</div>
+                                                                <div class="widget-subheading opacity-7" id="2_date">date</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><span id="2_temp">0</span> °C</td>
+                                                <td class="text-center"><span id="2_batt">0</span> %</td>
+                                                
+                                             
+                                            </tr>
+
+
+                                            <tr>
+                                                <td class="text-center text-muted" id="3_id">#3</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading" id="3_time">time</div>
+                                                                <div class="widget-subheading opacity-7" id="3_date">date</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><span id="3_temp">0</span> °C</td>
+                                                <td class="text-center"><span id="3_batt">0</span> %</td>
+                                                
+                                             
+                                            </tr>
+
+                                            <tr>
+                                                <td class="text-center text-muted" id="4_id">#4</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading" id="4_time">time</div>
+                                                                <div class="widget-subheading opacity-7" id="4_date">date</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><span id="4_temp">0</span> °C</td>
+                                                <td class="text-center"><span id="4_batt">0</span> %</td>
+                                                
+                                             
+                                            </tr>
+
+                                            <tr>
+                                                <td class="text-center text-muted" id="5_id">#5</td>
+                                                <td>
+                                                    <div class="widget-content p-0">
+                                                        <div class="widget-content-wrapper">
+                                                            <div class="widget-content-left mr-3">
+
+                                                            </div>
+                                                            <div class="widget-content-left flex2">
+                                                                <div class="widget-heading" id="5_time">time</div>
+                                                                <div class="widget-subheading opacity-7" id="5_date">date</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center"><span id="5_temp">0</span> °C</td>
+                                                <td class="text-center"><span id="5_batt">0</span> %</td>
+                                                
+                                             
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="app-wrapper-footer">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <p><i>Cloud Computing project by Juan, Shonal, Gonzalo, Lucia & Valantis - 2023</i></p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>    </div>
+                
+        </div>
+    </div>
+<!-- <script type="text/javascript" src="js/main.js"></script> -->
+
+</body>
+</html>
