@@ -27,8 +27,15 @@ console.log(`Using event hub consumer group [${eventHubConsumerGroup}]`);
 // Redirect requests to the public subdirectory to the root
 const app = express();
 app.use(express.static(path.join(__dirname, "public")));
-app.use((req, res /* , next */) => {
-  res.redirect("/");
+app.use(express.json());
+
+app.post('/webhook', (req, res) => {
+  const message = req.body;
+  // Process the message received from the webhook
+  console.log('Received message:', message);
+  wss.broadcast(JSON.stringify(message));
+  // Send a response to the webhook
+  res.status(200).send('Received message');
 });
 
 const server = http.createServer(app);
