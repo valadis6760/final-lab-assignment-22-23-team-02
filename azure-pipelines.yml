@@ -5,9 +5,13 @@ resources:
 - repo: self
 
 steps:
-# - script:
-#     echo hello
-#   displayName: 'Install linux dependencies'
+- script:
+    bash ./config-env.sh
+  displayName: 'Install linux dependencies'
+
+- script:
+    python3 ./src/main.py -n 10
+  displayName: 'Execute test of the script'
 
 - task: Docker@2
   inputs:
