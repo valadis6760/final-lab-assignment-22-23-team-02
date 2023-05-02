@@ -86,7 +86,6 @@ class app_manager():
                     self.basic_task()
 
         except:
-            print ( "IoTHubClient sample stopped, check the connection string" )
-            sys.exit() 
+            sys.exit("ERROR: IoTHubClient sample stopped, check the connection string") 
         
         print ( "IoT Hub application correctly executed... exit" )
