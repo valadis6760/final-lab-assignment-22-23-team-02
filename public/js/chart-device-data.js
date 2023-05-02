@@ -153,83 +153,119 @@ $(document).ready(() => {
   // 5. Update the chart UI
   webSocket.onmessage = function onMessage(message) {
     try {
+      console.log(message);
       const recivedData = JSON.parse(message.data);
+
       const messageData = recivedData.IotData;
-      console.log(messageData);
+      const alertData = recivedData.alert;
 
-      // Temperature, Humidity & Pressure
+      if (typeof alertData === "undefined") {
+        console.log(messageData);
 
-      document.getElementById("temp").textContent =
-        messageData.edge_device.temperature;
-      document.getElementById("humd").textContent =
-        messageData.edge_device.humidity;
-      document.getElementById("press").textContent =
-        messageData.edge_device.pressure;
+        // Temperature, Humidity & Pressure
 
-      // Adding Data to Weather chart and Battery Chart
+        document.getElementById("temp").textContent =
+          messageData.edge_device.temperature;
+        document.getElementById("humd").textContent =
+          messageData.edge_device.humidity;
+        document.getElementById("press").textContent =
+          messageData.edge_device.pressure;
 
-      addData(
-        messageData.edge_device.temperature,
-        messageData.edge_device.humidity,
-        messageData.edge_device.pressure,
-        messageData.edge_device.battery
-      );
-      weatherData.datasets[0].data = temperatureData;
-      weatherData.datasets[1].data = humidityData;
-      weatherData.datasets[2].data = pressureData;
-      droneBatData.datasets[0].data = dronebatteryData;
-      droneBatChart.update();
-      weatherChart.update();
+        // Adding Data to Weather chart and Battery Chart
 
-      // Chart statistics - weather
+        addData(
+          messageData.edge_device.temperature,
+          messageData.edge_device.humidity,
+          messageData.edge_device.pressure,
+          messageData.edge_device.battery
+        );
+        weatherData.datasets[0].data = temperatureData;
+        weatherData.datasets[1].data = humidityData;
+        weatherData.datasets[2].data = pressureData;
+        droneBatData.datasets[0].data = dronebatteryData;
+        droneBatChart.update();
+        weatherChart.update();
 
-      document.getElementById("avg_hum").textContent = getAverage(humidityData);
-      document.getElementById("avg_press").textContent =
-        getAverage(pressureData);
-      document.getElementById("avg_temp").textContent =
-        getAverage(temperatureData);
+        // Chart statistics - weather
 
-      document.getElementById("avg_hum_pgs").style.width =
-        getAverage(humidityData) + "%";
-      document.getElementById("avg_press_pgs").style.width =
-        getAverage(pressureData) + "%";
-      document.getElementById("avg_temp_pgs").style.width =
-        getAverage(temperatureData) + "%";
+        document.getElementById("avg_hum").textContent =
+          getAverage(humidityData);
+        document.getElementById("avg_press").textContent =
+          getAverage(pressureData);
+        document.getElementById("avg_temp").textContent =
+          getAverage(temperatureData);
 
-      // Chart statistics - battery
+        document.getElementById("avg_hum_pgs").style.width =
+          getAverage(humidityData) + "%";
+        document.getElementById("avg_press_pgs").style.width =
+          getAverage(pressureData) + "%";
+        document.getElementById("avg_temp_pgs").style.width =
+          getAverage(temperatureData) + "%";
 
-      document.getElementById("drone_bat_percent").textContent =
-        messageData.edge_device.battery;
-      document.getElementById("drone_bat_percent_pgs").style.width =
-        messageData.edge_device.battery + "%";
+        // Chart statistics - battery
 
-      // Farm Statistics
+        document.getElementById("drone_bat_percent").textContent =
+          messageData.edge_device.battery;
+        document.getElementById("drone_bat_percent_pgs").style.width =
+          messageData.edge_device.battery + "%";
 
-      var myAnimalBattery = [];
-      var myAnimalHealth = [];
-      var collar_data = messageData.devices;
-      var timeStamp = messageData.ts;
-      const dateObject = new Date(timeStamp * 1000);
-      const read_date = dateObject.toLocaleDateString("pt-PT");
-      const read_time = dateObject.toLocaleTimeString();
-      // update Active Livestock Table
-      collar_data.map((x) => {
-        console.log(x);
-        myAnimalHealth.push(x.temperature);
-        myAnimalBattery.push(x.battery);
-        updateDevice(x.id + 1, read_time, read_date, x.temperature, x.battery);
-      });
+        // Farm Statistics
 
-      document.getElementById("farm_total").textContent =
-        messageData.devices.length;
+        var myAnimalBattery = [];
+        var myAnimalHealth = [];
+        var collar_data = messageData.devices;
+        var timeStamp = messageData.ts;
+        const dateObject = new Date(timeStamp * 1000);
+        const read_date = dateObject.toLocaleDateString("pt-PT");
+        const read_time = dateObject.toLocaleTimeString();
+        // update Active Livestock Table
+        collar_data.map((x) => {
+          console.log(x);
+          myAnimalHealth.push(x.temperature);
+          myAnimalBattery.push(x.battery);
+          updateDevice(
+            x.id + 1,
+            read_time,
+            read_date,
+            x.temperature,
+            x.battery
+          );
+        });
 
-      document.getElementById("farm_batt").textContent = getPercent(
-        getBattery(myAnimalBattery)
-      );
+        document.getElementById("farm_total").textContent =
+          messageData.devices.length;
 
-      document.getElementById("farm_health").textContent = getPercent(
-        getHealth(myAnimalHealth)
-      );
+        document.getElementById("farm_batt").textContent = getPercent(
+          getBattery(myAnimalBattery)
+        );
+
+        document.getElementById("farm_health").textContent = getPercent(
+          getHealth(myAnimalHealth)
+        );
+      } else {
+        console.log(alertData.type);
+        console.log(alertData.collarId);
+
+        if (alertData.type === "battery") {
+          alert(
+            "Alert! The battery of colar with id " +
+              alertData.collarId +
+              " is running low."
+          );
+        } else if (alertData.type === "temperature") {
+          alert(
+            "Alert! The cow with colar id " +
+              alertData.collarId +
+              " has high temperature."
+          );
+        } else if (alertData.type === "both") {
+          alert(
+            "The cow with the collar id " +
+              alertData.collarId +
+              "  has high temperature. Also the battery of this collar is running low."
+          );
+        }
+      }
     } catch (err) {
       console.error(err);
     }

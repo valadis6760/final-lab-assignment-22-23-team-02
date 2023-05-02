@@ -4,7 +4,6 @@ const WebSocket = require("ws");
 const path = require("path");
 const EventHubReader = require("./scripts/event-hub-reader.js");
 
-//"HostName=iot-hub-cow-livestock.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=AcsYNIdL2C4Svg9CBHGW5x4HxS7o728iI/bnAXCZPM8=";
 const iotHubConnectionString = process.env.IotHubConnectionString;
 if (!iotHubConnectionString) {
   console.error(
@@ -14,7 +13,7 @@ if (!iotHubConnectionString) {
 }
 console.log(`Using IoT Hub connection string [${iotHubConnectionString}]`);
 
-const eventHubConsumerGroup = process.env.EventHubConsumerGroup; //"webappconsumer"
+const eventHubConsumerGroup = process.env.EventHubConsumerGroup;
 console.log(eventHubConsumerGroup);
 if (!eventHubConsumerGroup) {
   console.error(
@@ -29,13 +28,13 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
-app.post('/webhook', (req, res) => {
+app.post("/webhook", (req, res) => {
   const message = req.body;
   // Process the message received from the webhook
-  console.log('Received message:', message);
+  console.log("Received message:", message);
   wss.broadcast(JSON.stringify(message));
   // Send a response to the webhook
-  res.status(200).send('Received message');
+  res.status(200).send("Received message");
 });
 
 const server = http.createServer(app);
