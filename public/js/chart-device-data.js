@@ -174,9 +174,9 @@ $(document).ready(() => {
         messageData.edge_device.pressure,
         messageData.edge_device.battery
       );
-      weatherData.datasets[0].data = humidityData;
-      weatherData.datasets[1].data = pressureData;
-      weatherData.datasets[2].data = temperatureData;
+      weatherData.datasets[0].data = temperatureData;
+      weatherData.datasets[1].data = humidityData;
+      weatherData.datasets[2].data = pressureData;
       droneBatData.datasets[0].data = dronebatteryData;
       droneBatChart.update();
       weatherChart.update();
