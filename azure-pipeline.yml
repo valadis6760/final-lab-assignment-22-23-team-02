@@ -33,7 +33,3 @@ steps:
     targetPath: '$(Build.ArtifactStagingDirectory)'
     publishLocation: 'pipeline'
   displayName: 'Publish npm artifact'
-
-# - script: |
-#     npm run start
-#   displayName: 'npm start'
