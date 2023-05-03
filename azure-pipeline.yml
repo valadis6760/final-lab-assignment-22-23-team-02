@@ -7,7 +7,7 @@ trigger:
 - webbapp
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 steps:
 - task: NodeTool@0
@@ -19,6 +19,6 @@ steps:
     npm install
   displayName: 'npm install'
 
-- script: |
-    npm run build
-  displayName: 'npm start'
+# - script: |
+#     npm run start
+#   displayName: 'npm start'
