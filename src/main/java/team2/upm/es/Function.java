@@ -46,8 +46,8 @@ public class Function {
         // Extract the message from the request body
         String message = request.getBody().get();
         log.info("Message: " + message);
-    //    String webhookUrl = "https://web-app-monitoring.azurewebsites.net/webhook";
-        String webhookUrl = "http://localhost:3000/webhook";
+       String webhookUrl = "https://web-app-monitoring.azurewebsites.net/webhook";
+        // String webhookUrl = "http://localhost:3000/webhook";
 
         // Create an HTTP client to send the message to the Azure Web App
         CloseableHttpClient client = HttpClientBuilder.create().build();
