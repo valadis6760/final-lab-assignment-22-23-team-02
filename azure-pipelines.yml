@@ -10,7 +10,7 @@ steps:
   displayName: 'Install linux dependencies'
 
 - script:
-    python3 ./src/main.py -n 10
+    python3 ./src/main.py -n 10 -t edge
   displayName: 'Execute test of the script'
 
 - task: Docker@2
