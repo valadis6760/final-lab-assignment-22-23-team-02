@@ -2,7 +2,7 @@
 
 from azure_config import *
 from device_conf import *
-from azure_edge_device import edge_device_client
+from azure_edge_device import edge_device_client, dev_type
 from device_simulator  import device_simulator
 from system_functions import *
 
@@ -26,14 +26,16 @@ class app_manager():
     def check_init(self) -> None:
 
         # check if there are enough arguments, the app just accepts 1 argumment 
-        args        = checkArguments(1)
-        self.app_t   = app_type.APP_CONTINIUS
+        args            = checkArguments()
+        self.app_t      = app_type.APP_CONTINIUS
+        self.client     = None
         
-        if len(args) == 0:
-            print("No argument passed ... exit: use --help")
+        if len(args) == 0 or len(args) < 3:
+            print("1 Arguments error ... exit: use --help")
             return False
         else:
             command     = args[0]
+            offset = 0
             if(command == "--help"):
                 print('''
                 EXECUTION: pyhton3 main.py [OPTION]
@@ -41,23 +43,36 @@ class app_manager():
                     --help              print this help string
                     -c, --continius     continius execution 
                     -n, --number [n]    execute n times a sending of the information
+                    -t, --type          device type: edge or gateway
                 ''')
                 return False
             elif(command == "-c" or command == "--continius"):
                 print("--> Coninius execution selected")
                 self.app_t   = app_type.APP_CONTINIUS
-            elif((command == "-n" or command == "--number") and len(args) == 2):
+                offset = 1
+            elif((command == "-n" or command == "--number")):
                 print("--> Fixed execution selected: " + args[1])
                 try:
                     self.numbers = int(args[1])
                 except:
-                    print("Argument not supported... exit: use --help")
+                    print("2 Argument not supported... exit: use --help")
                     return False
                 self.app_t   = app_type.APP_FIXED
+                offset = 2
             else:
-                print("Argument not supported... exit: use --help")
+                print("3 Argument not supported... exit: use --help")
                 return False
-        
+
+            command = args[offset]
+            if (command == "-t" or command == "--type"):
+                if args[offset +1] == "edge":
+                    self.client     = edge_device_client(1, dev_type.EDGE_DEVICE, IOT_EDGE_CONNECTION_STRING, 5)
+                elif args[offset +1] == "gateway":
+                    self.client     = edge_device_client(1, dev_type.GATEWAY_DEVICE, IOT_EDGE_CONNECTION_STRING, 5)
+            else:
+                print("4 Argument not supported... exit: use --help")
+                return False
+
             return True
     
     def basic_task(self):
@@ -71,7 +86,7 @@ class app_manager():
         try: 
             # connect to the azure device 
             print ( "IoT Hub device sending periodic messages, press Ctrl-C to exit" )
-            self.client = edge_device_client(1, IOT_EDGE_CONNECTION_STRING, 5)
+            # self.client = edge_device_client(1, dev_type.GATEWAY_DEVICE, IOT_EDGE_CONNECTION_STRING, 5)
             self.client.connect()
 
             # creation of simulated devices

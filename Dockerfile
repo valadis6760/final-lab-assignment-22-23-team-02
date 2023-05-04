@@ -22,5 +22,5 @@ RUN pip3 install -r /home/drone-app/requirements.txt
 ENV NAME jmad
 ENV DRONE_APP_PATH /home/drone-app
 
-# Run app.py when the container launches
-CMD ["python3", "/home/drone-app/src/main.py","-c"]
+# Run main.py when the container launches
+CMD ["python3", "/home/drone-app/src/main.py","-c","-t","edge"]

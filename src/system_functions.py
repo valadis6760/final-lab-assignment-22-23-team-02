@@ -12,11 +12,9 @@ def getFilesPathInDir(dir_path):
     return files_names
 
 ## use this function to include restricctions to the arguments inputs
-def checkArguments(min_len):
+def checkArguments():
 
     length = len(sys.argv)
-    # if length > min_len:
-        # args [0] is the name of main file
     return sys.argv[1:(length)]
 
 def createFile(path_file):
