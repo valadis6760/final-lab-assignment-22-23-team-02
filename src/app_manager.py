@@ -62,19 +62,21 @@ class app_manager():
     
     def basic_task(self):
         # check all sevices status and send the payload in JSON format
-        self.client.send_complete_status()
+        if not self.client.send_complete_status():
+            sys.exit("ERROR: credentials of the iot device in azure_config.py")
         time.sleep(DEALY_SENT_SECONDS)
 
     def start(self):
+        
         try: 
             # connect to the azure device 
             print ( "IoT Hub device sending periodic messages, press Ctrl-C to exit" )
-            self.client = edge_device_client(1, IOT_EDGE_CONNECTION_STRING)
+            self.client = edge_device_client(1, IOT_EDGE_CONNECTION_STRING, 5)
             self.client.connect()
 
             # creation of simulated devices
             for id in range(DEVICE_NUMBER):
-                self.client.include_device(device_simulator(id))
+                self.client.include_device(device_simulator(id, 5))
 
             if self.app_t == app_type.APP_CONTINIUS:
             
@@ -86,6 +88,6 @@ class app_manager():
                     self.basic_task()
 
         except:
-            sys.exit("ERROR: IoTHubClient sample stopped, check the connection string") 
+            sys.exit("ERROR: IoTHubClient sample stopped, check the connection") 
         
         print ( "IoT Hub application correctly executed... exit" )

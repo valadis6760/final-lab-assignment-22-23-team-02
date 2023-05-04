@@ -1,6 +1,5 @@
 
 import random
-from device_conf import *
 import calendar
 import time
 
@@ -12,19 +11,14 @@ def get_timestamp():
 
     return time_stamp
 
-def get_status_from_device(dev_id):
-    
-    batt        = round(MIN_BATTERY_PERC    + (random.random() * (MAX_BATTERY_PERC  - MIN_BATTERY_PERC))    , ROUND_DECIMALS)
-    temperature = round(MIN_TEMPERATURE_C   + (random.random() * (MAX_TEMPERATURE_C - MIN_TEMPERATURE_C))   , ROUND_DECIMALS)
-    message     =  '{"id":' + str(dev_id) + ',"battery":' + str(batt) + ',"temperature":' + str(temperature) + '}'
-    return      message
+def get_random_value(init_value, range_value, min, max, decimals = 2, lower = False):
 
-def get_status_from_edge(edge_id):
-    
-    batt        = round(MIN_BATTERY_PERC    + (random.random() * (MAX_BATTERY_PERC  - MIN_BATTERY_PERC)),   ROUND_DECIMALS)
-    temperature = round(MIN_TEMPERATURE_C   + (random.random() * (MAX_TEMPERATURE_C - MIN_TEMPERATURE_C)),  ROUND_DECIMALS)
-    humidity    = round(MIN_HUMIDITY_PERC   + (random.random() * (MAX_HUMIDITY_PERC - MIN_HUMIDITY_PERC)),  ROUND_DECIMALS)
-    pressure    = round(MIN_PRESSURE_KPa    + (random.random() * (MAX_PRESSURE_KPa  - MIN_PRESSURE_KPa)),   ROUND_DECIMALS)
-    message     =  '"edge_device":{"id":' + str(edge_id) + ',"battery":' + str(batt) + ',"temperature":' + str(temperature) + ',"humidity":' + str(humidity) + ',"pressure":' + str(pressure) + '}'
+    base = init_value - range_value
+    if not lower:
+        range_value *= 2
+    value = round(base   + (random.random() * (range_value))   , decimals)
 
-    return      message
+    value = value if value < max else max
+    value = value if value > min else min
+    
+    return value
